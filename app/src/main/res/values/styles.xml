@@ -1,0 +1,55 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorBlack</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!-- 팝업창 -->
+    <!--<style name="Theme.MyDialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+    </style>-->
+
+    <!-- 둥글게 할 때 같이써야 에러안남 위에와 -->
+    <!--<style name="MyPopupMenu" parent="android:Theme.Dialog">
+        <item name="android:windowBackground">@drawable/round_dialog</item>
+    </style>-->
+
+    <!-- 팝업창 -->
+    <style name="Theme.MyDialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/round_dialog</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+    </style>
+
+
+    <!--투명 액티비티 -->
+    <style name="Theme.Transparent" parent="android:Theme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <style name="Transparent" parent="@style/Theme.AppCompat">
+    <item name="windowNoTitle">true</item>
+    <!-- 투명정도를 나타내는 색-->
+    <item name="android:windowBackground">@android:color/transparent</item>
+    <item name="android:colorBackgroundCacheHint">@null</item>
+    <item name="android:windowIsTranslucent">true</item>
+    <item name="android:windowAnimationStyle">@android:style/Animation</item>
+    <!--
+    android:backgroundDimEnabled
+    true - 반투명 검정 /  false - 완전 투명
+    -->
+    <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+
+</resources>

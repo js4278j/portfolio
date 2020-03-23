@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:background="@color/colorBlack"
+    android:weightSum="10">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:orientation="horizontal"
+        android:weightSum="10" >
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="10dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_folder_orange_24dp"/>
+
+        <TextView
+            android:id="@+id/fdTitle"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:gravity="center_vertical"
+            android:text="모든 나의 iPhone"
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/fdOption"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginRight="7dp"
+            android:padding="2dp"
+            android:src="@drawable/ic_more_horiz_orange_24dp" />
+
+        <ImageView
+            android:id="@+id/fdMove"
+            android:layout_width="0.55dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_dehaze_gray_24dp" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp"
+        android:layout_marginLeft="50dp"
+        android:background="@color/colorGray" />
+
+</LinearLayout>
+
