@@ -7,25 +7,14 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.mymemo.Adapter.FolderAdapter;
 import com.example.mymemo.Data.MemoFolderData;
-import com.example.mymemo.Manager.MemoFolderManager;
 import com.example.mymemo.Manager.MemoManager;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Deque;
-import java.util.Iterator;
-import java.util.Queue;
-import java.util.Stack;
-import java.util.TreeMap;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     TextView newFolder,editTxt;
 
     ItemTouchHelper helper;
-    ItemTouchHelperCallback mCallback;
+    SwipeAndDragHelper swipeAndDragHelper;
 
     public SharedPreferences prefs;
 
@@ -62,13 +51,14 @@ public class MainActivity extends AppCompatActivity {
         fdRcView = findViewById(R.id.folderRcView);
         fdRcView.setLayoutManager(new LinearLayoutManager(this));
         fdAdapter = new FolderAdapter(memoMgr.getFolderList());
+        swipeAndDragHelper = new SwipeAndDragHelper(fdAdapter);
+        helper = new ItemTouchHelper(swipeAndDragHelper);
+        fdAdapter.setTouchHelper(helper);
         fdRcView.setAdapter(fdAdapter);
-        fdRcView.setNestedScrollingEnabled(false);
-        fdAdapter.notifyDataSetChanged();
-
-        helper = new ItemTouchHelper(new ItemTouchHelperCallback(fdAdapter));
         //RecyclerView에 ItemTouchHelper 붙이기
         helper.attachToRecyclerView(fdRcView);
+        fdRcView.setNestedScrollingEnabled(false);
+        fdAdapter.notifyDataSetChanged();
 
         //편집모드
         editTxt.setOnClickListener(new View.OnClickListener() {

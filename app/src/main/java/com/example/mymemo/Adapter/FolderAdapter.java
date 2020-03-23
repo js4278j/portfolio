@@ -1,10 +1,8 @@
 package com.example.mymemo.Adapter;
 
 import android.content.Context;
-import android.support.v4.view.MotionEventCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,21 +11,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mymemo.Data.MemoFolderData;
-import com.example.mymemo.ItemTouchHelperCallback;
-import com.example.mymemo.ItemTouchHelperListener;
-import com.example.mymemo.ItemView;
-import com.example.mymemo.Manager.MemoFolderManager;
 import com.example.mymemo.R;
+import com.example.mymemo.SwipeAndDragHelper;
 
 import java.util.ArrayList;
 
 public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ViewHolder>
-         implements ItemTouchHelperListener{
+         implements SwipeAndDragHelper.ActionCompletionContract {
 
     //편집 버튼 눌렀을때 view
     public static final int VIEWTYPE_NORMAL = 0;
     public static final int VIEWTYPE_EDIT = 1;
     int mItemViewType;
+    private ItemTouchHelper touchHelper;
 
     public void setItemViewType(int viewType) {
         mItemViewType = viewType;
@@ -121,7 +117,7 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ViewHolder
 
     // onBindViewHolder() - position에 해당하는 데이터를 뷰홀더의 아이템뷰에 표시.
     @Override
-    public void onBindViewHolder(FolderAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final FolderAdapter.ViewHolder holder, final int position) {
         //임시로 .. 나중에 map을 통해서 데이터 다 받아와야함
         //String text = mData.get(position);
         String title = mData.get(position).getFdTitle();
@@ -138,8 +134,8 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ViewHolder
             holder.fdMove.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-                    if(MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN){
-                        onItemMove(position,1);
+                    if(event.getActionMasked() == MotionEvent.ACTION_DOWN){
+                        touchHelper.startDrag(holder);
                     }
                     return false;
                 }
@@ -160,7 +156,7 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ViewHolder
 
     //to_position 값을 알아내야한다 알아내서 onItemMove 메소드 안에다 넣어줘야함. ㅁㄴ아ㅣ러ㅏㅣ;ㅁㄴ러아ㅣㄴ;ㅁ러마ㅣ;ㄴㅇ러ㅣ;ㅏㄴ러ㅏ 지금은 임의로 넣음 .
     @Override
-    public boolean onItemMove(int from_position, int to_position) {
+    public void onViewMoved(int from_position, int to_position) {
         //이동할 객체 저장
         MemoFolderData memoFolderData = mData.get(from_position);
         //이동할 객체 삭제
@@ -170,13 +166,17 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ViewHolder
 
         //Adapter에 데이터 이동알림
         notifyItemMoved(from_position, to_position);
-        return true;
+
     }
 
     @Override
-    public void onItemSwipe(int position) {
+    public void onViewSwiped(int position) {
         mData.remove(position);
         notifyItemRemoved(position);
+    }
+
+    public void setTouchHelper(ItemTouchHelper touchHelper){
+        this.touchHelper = touchHelper;
     }
 
 
