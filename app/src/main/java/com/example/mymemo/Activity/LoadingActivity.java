@@ -1,12 +1,12 @@
-package com.example.mymemo;
+package com.example.mymemo.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.example.mymemo.Manager.MemoFolderManager;
 import com.example.mymemo.Manager.MemoManager;
+import com.example.mymemo.R;
 
 public class LoadingActivity extends Activity {
 

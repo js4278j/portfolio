@@ -5,6 +5,13 @@
     android:gravity="center"
     android:background="#000">
 
+    <RadioButton
+        android:id="@+id/memoRadio"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:buttonTint="@color/colorWhite"
+        android:visibility="visible"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"

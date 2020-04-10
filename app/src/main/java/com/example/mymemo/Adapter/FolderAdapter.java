@@ -1,6 +1,7 @@
 package com.example.mymemo.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mymemo.Data.MemoFolderData;
+import com.example.mymemo.Activity.FolderEditActivity;
 import com.example.mymemo.R;
 import com.example.mymemo.SwipeAndDragHelper;
 
@@ -111,16 +113,16 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ViewHolder
         FolderAdapter.ViewHolder vh = new FolderAdapter.ViewHolder(view);
         return vh;
 
-
     }
 
 
     // onBindViewHolder() - position에 해당하는 데이터를 뷰홀더의 아이템뷰에 표시.
     @Override
     public void onBindViewHolder(final FolderAdapter.ViewHolder holder, final int position) {
+
         //임시로 .. 나중에 map을 통해서 데이터 다 받아와야함
         //String text = mData.get(position);
-        String title = mData.get(position).getFdTitle();
+        final String title = mData.get(position).getFdTitle();
         holder.fdTitle.setText(title);
         //int count = mData.get(position).getFdCount();
         if (mItemViewType == 0) {
@@ -141,6 +143,24 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ViewHolder
                 }
             });
 
+
+            holder.fdOption.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Context context = v.getContext();
+                    Intent intent = new Intent(context, FolderEditActivity.class);
+                    intent.putExtra("title",title);
+                    intent.putExtra("position",position);
+                    (context).startActivity(intent);
+                    /*Context context = v.getContext();
+
+                    ((MainActivity)v.getContext()).onClickItem(position);
+                    ((MainActivity)v.getContext()).changeOptionType(position);*/
+
+                }
+            });
+
         }
 
     }
@@ -154,7 +174,7 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ViewHolder
         return mData.size();
     }
 
-    //to_position 값을 알아내야한다 알아내서 onItemMove 메소드 안에다 넣어줘야함. ㅁㄴ아ㅣ러ㅏㅣ;ㅁㄴ러아ㅣㄴ;ㅁ러마ㅣ;ㄴㅇ러ㅣ;ㅏㄴ러ㅏ 지금은 임의로 넣음 .
+
     @Override
     public void onViewMoved(int from_position, int to_position) {
         //이동할 객체 저장
@@ -163,7 +183,6 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ViewHolder
         mData.remove(from_position);
         //이동하고 싶은 position에 추가
         mData.add(to_position, memoFolderData);
-
         //Adapter에 데이터 이동알림
         notifyItemMoved(from_position, to_position);
 

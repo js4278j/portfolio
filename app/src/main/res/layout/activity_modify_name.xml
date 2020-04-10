@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/backLout"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="bottom"
+    android:weightSum="10"
+    android:layout_weight="0.5"
+    android:background="@color/transparent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_weight="9.5"
+        android:orientation="vertical"
+        android:background="@color/colorBlack">
+
+
+
+            <RelativeLayout
+                android:id="@+id/RoutTop"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/cancelTxt"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_alignParentStart="true"
+                    android:text="취소"
+                    android:textColor="@color/colorOrange"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/titleTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_centerInParent="true"
+                    android:text="이름 변경"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/saveTxt"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_alignParentEnd="true"
+                    android:text="저장"
+                    android:textColor="@color/colorOrange"
+                    android:textSize="14sp"/>
+
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="40dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/folderNameEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+                <!--x모양 아이콘 -->
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/folderDel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="폴더 삭제"
+                android:textSize="18sp"
+                android:textColor="@color/colorOrange"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

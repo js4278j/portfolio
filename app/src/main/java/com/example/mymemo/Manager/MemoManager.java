@@ -1,5 +1,7 @@
 package com.example.mymemo.Manager;
 
+import android.app.Activity;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.mymemo.Data.MemoData;
@@ -10,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 public class MemoManager {
 
@@ -179,6 +182,7 @@ public class MemoManager {
         return new String(buf, charPos, (64 - charPos));
     }
 
+    //날짜 부여
     public String setModifyDate(){
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
@@ -252,6 +256,32 @@ public class MemoManager {
         }
 
         return checkFolder;
+    }
+
+    public void modifyFolder(String title,int position){
+        folderList.get(position).setFdTitle(title);
+    }
+
+    public HashMap<String, View> _viewMap = new HashMap<>();
+
+
+    public HashMap<String, Object> _objectMap = new HashMap<>();
+
+    public void register(String key, Object val){
+        _objectMap.put(key,val);
+    }
+
+    public void unregister(String key){
+        if(_objectMap.containsKey(key)){
+            _objectMap.remove(key);
+        }
+    }
+
+    public Object getValue(String key){
+        if(_objectMap.containsKey(key)){
+            return _objectMap.get(key);
+        }
+        return null;
     }
 
     //private ArrayList<MemoData> memoList = new ArrayList<>();

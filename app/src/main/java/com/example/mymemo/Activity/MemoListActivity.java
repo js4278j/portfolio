@@ -1,4 +1,4 @@
-package com.example.mymemo;
+package com.example.mymemo.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -19,6 +19,7 @@ import com.example.mymemo.Adapter.MemoAdapter;
 import com.example.mymemo.Data.MemoData;
 import com.example.mymemo.Data.MemoFolderData;
 import com.example.mymemo.Manager.MemoManager;
+import com.example.mymemo.R;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -36,7 +37,7 @@ public class MemoListActivity extends AppCompatActivity {
 
     ImageView createImg;
     LinearLayout backLout;
-    TextView memoTitle;
+    TextView memoTitle,cancelTxt;
     EditText searchBar;
 
     String title;
@@ -44,6 +45,10 @@ public class MemoListActivity extends AppCompatActivity {
 
     Activity activity;
     ImageView editIcon;
+
+    MemoManager memoManager;
+
+    MemoListActivity self = this;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,7 +64,7 @@ public class MemoListActivity extends AppCompatActivity {
                 String modifyContent = memoMgr.getFolderList().get(position).getMemoList().get(pos).getContent();
                 String modifyId = memoMgr.getFolderList().get(position).getMemoList().get(pos).getId();
 
-                Intent loadContent = new Intent(getApplicationContext(),CreateContentActivity.class);
+                Intent loadContent = new Intent(getApplicationContext(), CreateContentActivity.class);
                 loadContent.putExtra("title",title);
                 loadContent.putExtra("position",position);
                 loadContent.putExtra("memoPos",pos);
@@ -95,8 +100,14 @@ public class MemoListActivity extends AppCompatActivity {
         editIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent editIntent = new Intent(activity,MemoEditActivity.class);
 
+                //변수로 집어넣어야함 MemoListActivity로 넣으면 getValue 할 때  캐스팅 오류
+                memoManager.register("MemoListActivity",self);
+
+                Intent editIntent = new Intent(activity,MemoEditActivity.class);
+                editIntent.putExtra("title",title);
+                editIntent.putExtra("position",position);
+                //editIntent.putExtra("viewType",MemoAdapter.VIEWTYPE_EDIT);
                 startActivity(editIntent);
                 overridePendingTransition(R.anim.slide_up, R.anim.slide_up);
             }
@@ -124,19 +135,16 @@ public class MemoListActivity extends AppCompatActivity {
     }
 
     public void init(){
+
+        memoManager = MemoManager.getInstance();
+
         this.activity = this;
         this.memoTitle = findViewById(R.id.memoTitle);
         this.editIcon = findViewById(R.id.editIcon);
         this.searchBar = findViewById(R.id.searchBar);
-
-        //보고 지워도 됨
-        //PotionList potionList = new PotionList(this);
-        //MemoData memoData = new MemoData();
-        /*memoAdapter = new MemoAdapter(this,memoList);
-        memoRcView.setAdapter(memoAdapter);*/
+        this.cancelTxt = findViewById(R.id.cancelTxt);
 
         //intent null check
-
         Intent intent = getIntent();
         if(intent.hasExtra("title") || intent.hasExtra("position")){
             title = Objects.requireNonNull(intent.getExtras()).getString("title");
@@ -163,22 +171,6 @@ public class MemoListActivity extends AppCompatActivity {
         createImg = findViewById(R.id.createImg);
         backLout = findViewById(R.id.backLout);
 
-    }
-
-
-    //null 일때 Intent로 넘겨줄 값이 없을 때
-    public boolean nullCheck(){
-
-        Intent intent = getIntent();
-        boolean nullCheck = intent.getExtras().getBoolean("nullCheck");
-        if(!nullCheck){
-            title = Objects.requireNonNull(intent.getExtras()).getString("title");
-            position = intent.getExtras().getInt("position");
-        } else {
-            nullCheck = true;
-        }
-
-        return nullCheck;
     }
 
 }

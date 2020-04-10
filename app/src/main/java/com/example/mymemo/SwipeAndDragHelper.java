@@ -35,11 +35,17 @@ public class SwipeAndDragHelper extends ItemTouchHelper.Callback {
         contract.onViewSwiped(viewHolder.getAdapterPosition());
     }
 
+    //isLong , isItem 둘다 false Swipe 기능x
     @Override
     public boolean isLongPressDragEnabled(){
-        //return true 일 떄 와 달라지는지 Test
         return false;
     }
+
+    @Override
+    public boolean isItemViewSwipeEnabled(){
+        return false;
+    }
+
 
     @Override
     public void onChildDraw(Canvas c,

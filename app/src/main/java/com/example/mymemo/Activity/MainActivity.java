@@ -1,4 +1,4 @@
-package com.example.mymemo;
+package com.example.mymemo.Activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,8 +11,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.mymemo.Adapter.FolderAdapter;
+import com.example.mymemo.Dialog.CreateFolderDialog;
 import com.example.mymemo.Data.MemoFolderData;
 import com.example.mymemo.Manager.MemoManager;
+import com.example.mymemo.R;
+import com.example.mymemo.SwipeAndDragHelper;
 
 import java.util.ArrayList;
 
@@ -34,31 +37,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        prefs = getSharedPreferences("Pref",MODE_PRIVATE);
-        memoMgr = MemoManager.getInstance();
 
-        editTxt = findViewById(R.id.editTxt);
-        //기본정보 삽입 folderList 0,1 이 같이 공유됨
-        //memoMgr.getMemo();
-
-        //folderList = fdMgr.getFolderList();
-        //fdMgr.defaultFolder();
-        //checkFirstRun();
-
-        /*DefaultThread defaultThread = new DefaultThread();
-        defaultThread.run();*/
-
-        fdRcView = findViewById(R.id.folderRcView);
-        fdRcView.setLayoutManager(new LinearLayoutManager(this));
-        fdAdapter = new FolderAdapter(memoMgr.getFolderList());
-        swipeAndDragHelper = new SwipeAndDragHelper(fdAdapter);
-        helper = new ItemTouchHelper(swipeAndDragHelper);
-        fdAdapter.setTouchHelper(helper);
-        fdRcView.setAdapter(fdAdapter);
-        //RecyclerView에 ItemTouchHelper 붙이기
-        helper.attachToRecyclerView(fdRcView);
-        fdRcView.setNestedScrollingEnabled(false);
-        fdAdapter.notifyDataSetChanged();
+        init();
 
         //편집모드
         editTxt.setOnClickListener(new View.OnClickListener() {
@@ -84,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(getApplicationContext(),CreateFolderDialog.class);
+                Intent intent = new Intent(getApplicationContext(), CreateFolderDialog.class);
                 startActivity(intent);
 
             }
@@ -112,6 +92,26 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    private void init(){
+        prefs = getSharedPreferences("Pref",MODE_PRIVATE);
+        memoMgr = MemoManager.getInstance();
+
+        editTxt = findViewById(R.id.editTxt);
+
+        fdRcView = findViewById(R.id.folderRcView);
+        fdRcView.setLayoutManager(new LinearLayoutManager(this));
+        fdAdapter = new FolderAdapter(memoMgr.getFolderList());
+        swipeAndDragHelper = new SwipeAndDragHelper(fdAdapter);
+        helper = new ItemTouchHelper(swipeAndDragHelper);
+        fdAdapter.setTouchHelper(helper);
+        fdRcView.setAdapter(fdAdapter);
+        //RecyclerView에 ItemTouchHelper 붙이기
+        helper.attachToRecyclerView(fdRcView);
+        fdRcView.setNestedScrollingEnabled(false);
+        fdAdapter.notifyDataSetChanged();
 
     }
 

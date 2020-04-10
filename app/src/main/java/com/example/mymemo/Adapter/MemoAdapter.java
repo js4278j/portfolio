@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.example.mymemo.Data.MemoData;
@@ -20,11 +21,20 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.ViewHolder> {
     private ArrayList<MemoData> mData;
     private ArrayList<MemoData> arrayList;
 
-    /*public MemoAdapter(Context context , ArrayList<MemoData> list) {
-        this.context = context;
-        this.mData = list ;
-        this.arrayList = new ArrayList<>();
-        this.arrayList.addAll(mData);
+    //편집 버튼 눌렀을때 view
+    public static final int VIEWTYPE_NORMAL = 0;
+    public static final int VIEWTYPE_EDIT = 1;
+    int mItemViewType;
+
+    public void setItemViewType(int viewType){
+        mItemViewType = viewType;
+        notifyDataSetChanged();
+    }
+
+    /*@Override
+    public int getItemViewType(int position) {
+        //return super.getItemViewType(position);
+        return mItemViewType;
     }*/
 
     public MemoAdapter(ArrayList<MemoData> list){
@@ -43,15 +53,10 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.ViewHolder> {
         this.mListener = listener;
     }
 
-
-    //private ArrayList<MemoFolderData> mData;
-
-    // 생성자에서 데이터 리스트 객체를 전달받음.
-
-
     // 아이템 뷰를 저장하는 뷰홀더 클래스.
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView memoTitle,timeTxt,infoTxt;
+        RadioButton memoRadio;
 
         ViewHolder(View itemView) {
             super(itemView) ;
@@ -69,10 +74,13 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.ViewHolder> {
             });
 
             // 뷰 객체에 대한 참조. (hold strong reference)
+            if(mItemViewType == 1) {
+                memoRadio = itemView.findViewById(R.id.memoRadio);
+            }
+
             memoTitle = itemView.findViewById(R.id.memoTitle);
             timeTxt = itemView.findViewById(R.id.timeTxt);
             infoTxt = itemView.findViewById(R.id.infoTxt);
-
         }
     }
 
@@ -81,13 +89,28 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.ViewHolder> {
     // onCreateViewHolder() - 아이템 뷰를 위한 뷰홀더 객체 생성하여 리턴.
     @Override
     public MemoAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Context context = parent.getContext() ;
+        //base
+        /*Context context = parent.getContext() ;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) ;
 
         View view = inflater.inflate(R.layout.item_adapter_memo, parent, false) ;
         MemoAdapter.ViewHolder vh = new MemoAdapter.ViewHolder(view) ;
 
-        return vh ;
+        return vh ;*/
+
+        View view;
+        Context context = parent.getContext();
+        LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        if(viewType == VIEWTYPE_NORMAL){
+            view = inflater.inflate(R.layout.item_adapter_memo, parent, false);
+        } else {
+            view = inflater.inflate(R.layout.item_adapter_memo_editmode,parent, false);
+        }
+        MemoAdapter.ViewHolder vh = new MemoAdapter.ViewHolder(view);
+        return vh;
+
+
     }
 
     // onBindViewHolder() - position에 해당하는 데이터를 뷰홀더의 아이템뷰에 표시.
@@ -108,30 +131,6 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.ViewHolder> {
         holder.memoTitle.setText(title);
         holder.timeTxt.setText(time);
         holder.timeTxt.setText(info);
-
-        /*String title ="";
-        String time = "";
-        String info ="";
-
-        for(int i =0; i< mData.get(position).getMemoList().size();i++){
-             title = mData.get(position).getMemoList().get(i).getTitle();
-             time = mData.get(position).getMemoList().get(i).getModifyDate();
-             info = mData.get(position).getMemoList().get(i).getSubTitle();
-
-        }*/
-
-
-        /*mData.get(position).getMemoList().
-
-        String title = mData.get().getMemoList().get(position).getTitle();
-        String time = mData.get().getMemoList().get(position).getModifyDate();
-        String info = mData.get().getMemoList().get(position).getSubTitle();*/
-
-
-
-
-        /*holder.fdTitle.setText(title);
-        holder.fdCount.setText(String.valueOf(count));*/
 
     }
 

@@ -1,5 +1,7 @@
 package com.example.mymemo.Data;
 
+import android.widget.LinearLayout;
+
 public class MemoData {
 
     private String id;
